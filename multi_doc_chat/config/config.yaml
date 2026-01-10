@@ -5,6 +5,7 @@ embedding_model:
 retriever:
   top_k: 10
 
+
 llm:
   groq:
     provider: "groq"
