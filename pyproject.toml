@@ -20,6 +20,7 @@ dependencies = [
     "langsmith>=0.6.2",
     "openai>=1.109.1",
     "pandas>=2.3.3",
+    "pypdf>=6.6.0",
     "python-dotenv==1.1.1",
     "python-multipart==0.0.20",
     "sentence-transformers>=5.2.0",
