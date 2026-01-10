@@ -71,7 +71,7 @@ class ChatIngestor:
         chunk_size: int = 1000,
         chunk_overlap: int = 200,
         k: int = 5,
-        search_type: str = "mmr",
+        search_type: str = "similarity",
         fetch_k: int = 20,
         lambda_mult: float = 0.5):
         try:
@@ -96,15 +96,16 @@ class ChatIngestor:
             added = fm.add_documents(chunks)
             log.info("FAISS index updated", added=added, index=str(self.faiss_dir))
 
-            # Configure search parameters based on search type
-            search_kwargs = {"k": k}
-            
+            # Configure search parameters based on search type    
             if search_type == "mmr":
-                # MMR needs fetch_k (docs to fetch) and lambda_mult (diversity parameter)
-                search_kwargs["fetch_k"] = fetch_k
-                search_kwargs["lambda_mult"] = lambda_mult
-                log.info("Using MMR search", k=k, fetch_k=fetch_k, lambda_mult=lambda_mult)
-            
+                search_kwargs = {
+                    "k": k, 
+                    "fetch_k": fetch_k, 
+                    "lambda_mult": lambda_mult
+                }
+            else:
+                search_kwargs = {"k": k}
+
             return vs.as_retriever(search_type=search_type, search_kwargs=search_kwargs)
 
         except Exception as e:
